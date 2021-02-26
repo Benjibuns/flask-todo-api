@@ -50,6 +50,25 @@ def add_todo():
     todo = Todo.query.get(new_todo.id)
     return todo_schema.jsonify(todo)
 
+# @app.route('/api/get-all-todos', methods=['GET'])
+# def get_all_todos():
+#     all_todos = Todo.query.all()
+#     result = todos_schema.dump(all_todos)
+#     return jsonify(result)
+
+@app.route('/api/get-all-todos', methods=['GET'])
+def get_all_todos():
+    all_todos = Todo.query.all()
+    return jsonify(todos_schema.dump(all_todos))
+
+@app.route("/api/edit-done/<todo_id>", methods=["PATCH"])
+def edit_done(todo_id):
+  todo = Todo.query.get(todo_id)
+  new_done = request.json["done"]
+  todo.done = new_done
+  db.session.commit()
+  return todo_schema.jsonify(todo)
+
 
 if __name__ == "__main__":
     app.debug = True
