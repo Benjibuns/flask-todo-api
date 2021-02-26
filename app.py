@@ -47,8 +47,7 @@ def add_todo():
     new_todo = Todo(title, done)
     db.session.add(new_todo)
     db.session.commit()
-    todo = Todo.query.get(new_todo.id)
-    return todo_schema.jsonify(todo)
+    return todo_schema.jsonify(new_todo)
 
 # @app.route('/api/get-all-todos', methods=['GET'])
 # def get_all_todos():
